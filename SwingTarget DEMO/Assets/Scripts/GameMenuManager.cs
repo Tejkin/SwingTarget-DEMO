@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameMenuManager : MonoBehaviour
 {
-    public GameObject menu;
+    public GameObject pauseMenu;
+    public GameObject endMenu;
     public InputActionProperty showButton;
     public bool paused = false;
     void Start()
@@ -33,14 +34,14 @@ public class GameMenuManager : MonoBehaviour
     public void Pause()
     {
         Time.timeScale = 0;
-        menu.SetActive(!menu.activeSelf);
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
         paused = true;
     }
 
     public void Resume()
     {
         Time.timeScale = 1;
-        menu.SetActive(!menu.activeSelf);
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
         paused = false;
     }
     
