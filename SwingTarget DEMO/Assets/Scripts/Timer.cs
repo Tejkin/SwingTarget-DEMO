@@ -23,4 +23,9 @@ public class Timer : MonoBehaviour
         currentTime = countDown ? currentTime -= Time.deltaTime : currentTime += Time.deltaTime;
         timerText.text = "Time: " + currentTime.ToString("0.00");
     }
+
+    public float ReturnTimer()
+    {
+        return currentTime;
+    }
 }

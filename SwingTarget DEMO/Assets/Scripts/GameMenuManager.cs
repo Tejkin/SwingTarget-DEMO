@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameMenuManager : MonoBehaviour
 {
+    [SerializeField] private Timer linkedTimerManager;
+
+    [Header("Menus")]
     public GameObject pauseMenu;
     public GameObject endMenu;
+    public TextMeshProUGUI timerText;
+
+    [Header("Input")]
     public InputActionProperty showButton;
-    public bool paused = false;
+
+    private bool paused = false;
     void Start()
     {
         
@@ -53,6 +61,15 @@ public class GameMenuManager : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void Finish()
+    {
+        paused = true;
+        Time.timeScale = 0;
+        endMenu.SetActive(!endMenu.activeSelf);
+        float timer = linkedTimerManager.ReturnTimer();
+        timerText.text = timer.ToString("0.00") + " seconds";
     }
 }
 
