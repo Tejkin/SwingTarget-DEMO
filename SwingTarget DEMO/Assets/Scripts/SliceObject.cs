@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EzySlice;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class SliceObject : MonoBehaviour
 {
@@ -29,6 +30,14 @@ public class SliceObject : MonoBehaviour
         {
             GameObject target = hit.transform.gameObject;
             Slice(target);
+            if (target.tag == "LevelExit")
+            {
+                int activeScene = SceneManager.GetActiveScene().buildIndex;
+                SceneManager.LoadScene(activeScene + 1);
+                Debug.Log("Loading Scene: " + SceneManager.GetSceneByBuildIndex(activeScene + 1));
+                return;
+            }
+
             linkedTargetControl.DestroyTarget();
             linkedScoreManager.Score();
         }
