@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class SliceObject : MonoBehaviour
 {
     [SerializeField] private TargetsDestroyed linkedTargetControl;
+    [SerializeField] private ScoreManager linkedScoreManager;
     public Transform startSlicePoint;
     public Transform endSlicePoint;
     public VelocityEstimator velocityEstimator;
@@ -29,6 +30,7 @@ public class SliceObject : MonoBehaviour
             GameObject target = hit.transform.gameObject;
             Slice(target);
             linkedTargetControl.DestroyTarget();
+            linkedScoreManager.Score();
         }
     }
 
