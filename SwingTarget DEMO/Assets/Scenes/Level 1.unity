@@ -8631,11 +8631,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29976ea35ff68aa4c9f9f2b6ba32d9a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfTargetsToDestroy: 0
+  numberOfTargetsToDestroy: 20
   currentlyDestroyedTargets: 0
   onTargetsDestroyed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1152369577}
+        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
+        m_MethodName: Finish
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!23 &4958927920807608895
 MeshRenderer:
   m_ObjectHideFlags: 0
