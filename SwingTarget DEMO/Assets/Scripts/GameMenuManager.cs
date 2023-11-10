@@ -8,9 +8,6 @@ using TMPro;
 public class GameMenuManager : MonoBehaviour
 {
     [SerializeField] private Timer linkedTimerManager;
-    public Transform planeDebug;
-    public GameObject debugTarget;
-    public bool debug = false;
 
     [Header("Menus")]
     public GameObject pauseMenu;
