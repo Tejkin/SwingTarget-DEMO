@@ -4,6 +4,7 @@ using UnityEngine;
 using EzySlice;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SliceObject : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class SliceObject : MonoBehaviour
     public Material crossSectionMaterial;
     public float cutForce = 2000;
 
+    [Header("Debug")]
+    public bool debugSlice = false;
+    public Transform planeDebug;
+    public GameObject debugTarget;
+    
+
     void Start()
     {
         
@@ -24,10 +31,15 @@ public class SliceObject : MonoBehaviour
 
     void FixedUpdate()
     {
-        bool hasHit = Physics.Linecast(startSlicePoint.position, endSlicePoint.position, out RaycastHit hit, sliceableLayer);
+        if (debugSlice && Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            Slice(debugTarget);
+        }
 
+        bool hasHit = Physics.Linecast(startSlicePoint.position, endSlicePoint.position, out RaycastHit hit, sliceableLayer);
         if (hasHit)
         {
+            Debug.Log("has hit");
             GameObject target = hit.transform.gameObject;
             Slice(target);
             if (target.tag == "LevelExit")
@@ -45,11 +57,24 @@ public class SliceObject : MonoBehaviour
 
     public void Slice(GameObject target)
     {
+        
         Vector3 velocity = velocityEstimator.GetVelocityEstimate();
         Vector3 planeNormal = Vector3.Cross(endSlicePoint.position = startSlicePoint.position, velocity);
         planeNormal.Normalize();
-        
+        if (debugSlice)
+        {
+            SlicedHull debugHull = target.Slice(planeDebug.position, planeDebug.up);
+
+            if (debugHull != null)
+            {
+                GameObject debugUpperHull = debugHull.CreateUpperHull(target, crossSectionMaterial);
+
+                GameObject debugLowerHull = debugHull.CreateLowerHull(target, crossSectionMaterial);
+            }
+        }
+
         SlicedHull hull = target.Slice(endSlicePoint.position, planeNormal);
+        Debug.Log("Sliced object");
 
         if (hull != null)
         {
@@ -69,5 +94,7 @@ public class SliceObject : MonoBehaviour
         MeshCollider collider = slicedObject.AddComponent<MeshCollider>();
         collider.convex = true;
         rb.AddExplosionForce(cutForce, slicedObject.transform.position, 1);
+
+        Debug.Log("Created hull");
     }
 }
