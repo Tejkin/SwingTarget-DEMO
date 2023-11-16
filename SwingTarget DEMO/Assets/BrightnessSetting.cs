@@ -9,14 +9,16 @@ public class BrightnessSetting : MonoBehaviour
     [SerializeField] private Slider brightnessSlider;
     void Start()
     {
-
+        if (PlayerPrefs.HasKey("brightness"))
+        {
+            LoadBrightness();
+        }
+        else
+        {
+            ChangeBrightness();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void ChangeBrightness()
     {
@@ -25,6 +27,13 @@ public class BrightnessSetting : MonoBehaviour
 
         brightnessMaterial.color = color;
 
-        Debug.Log("Changed brightness");
+        PlayerPrefs.SetFloat("brightness", color.a);
+    }
+
+    public void LoadBrightness()
+    {
+        brightnessSlider.value = PlayerPrefs.GetFloat("brightness");
+
+        ChangeBrightness();
     }
 }
