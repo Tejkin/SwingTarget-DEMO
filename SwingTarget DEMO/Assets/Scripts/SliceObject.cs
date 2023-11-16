@@ -29,12 +29,18 @@ public class SliceObject : MonoBehaviour
         
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (debugSlice && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             Slice(debugTarget);
+            Debug.Log("space key pressed");
         }
+    }
+
+    void FixedUpdate()
+    {
+        
 
         bool hasHit = Physics.Linecast(startSlicePoint.position, endSlicePoint.position, out RaycastHit hit, sliceableLayer);
         if (hasHit)
