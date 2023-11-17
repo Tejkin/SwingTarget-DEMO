@@ -16,7 +16,7 @@ public class SliceObject : MonoBehaviour
     public LayerMask sliceableLayer;
 
     public Material crossSectionMaterial;
-    public float cutForce = 2000;
+    public float cutForce = 100;
 
     [Header("Debug")]
     public bool debugSlice = false;
@@ -65,7 +65,7 @@ public class SliceObject : MonoBehaviour
     {
         
         Vector3 velocity = velocityEstimator.GetVelocityEstimate();
-        Vector3 planeNormal = Vector3.Cross(endSlicePoint.position = startSlicePoint.position, velocity);
+        Vector3 planeNormal = Vector3.Cross(endSlicePoint.position - startSlicePoint.position, velocity);
         planeNormal.Normalize();
         if (debugSlice)
         {
@@ -76,6 +76,8 @@ public class SliceObject : MonoBehaviour
                 GameObject debugUpperHull = debugHull.CreateUpperHull(target, crossSectionMaterial);
 
                 GameObject debugLowerHull = debugHull.CreateLowerHull(target, crossSectionMaterial);
+
+                Destroy(target);
             }
         }
 
@@ -85,12 +87,15 @@ public class SliceObject : MonoBehaviour
         if (hull != null)
         {
             GameObject upperHull = hull.CreateUpperHull(target, crossSectionMaterial);
-            SetUpSlicedComponent(upperHull);
+            
 
             GameObject lowerHull = hull.CreateLowerHull(target, crossSectionMaterial);
-            SetUpSlicedComponent(lowerHull);
+            
 
             Destroy(target);
+            SetUpSlicedComponent(upperHull);
+            SetUpSlicedComponent(lowerHull);
+            Debug.Log("destroyed object");
         }
     }
 
@@ -99,7 +104,7 @@ public class SliceObject : MonoBehaviour
         Rigidbody rb = slicedObject.AddComponent<Rigidbody>();
         MeshCollider collider = slicedObject.AddComponent<MeshCollider>();
         collider.convex = true;
-        rb.AddExplosionForce(cutForce, slicedObject.transform.position, 1);
+        //rb.AddExplosionForce(cutForce, slicedObject.transform.position, 1);
 
         Debug.Log("Created hull");
     }

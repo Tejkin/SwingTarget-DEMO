@@ -42,14 +42,14 @@ public class GameMenuManager : MonoBehaviour
     public void Pause()
     {
         Time.timeScale = 0;
-        pauseMenu.SetActive(!pauseMenu.activeSelf);
+        pauseMenu.SetActive(true);
         paused = true;
     }
 
     public void Resume()
     {
         Time.timeScale = 1;
-        pauseMenu.SetActive(!pauseMenu.activeSelf);
+        pauseMenu.SetActive(false);
         paused = false;
     }
     
