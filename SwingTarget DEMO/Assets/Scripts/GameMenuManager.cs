@@ -17,6 +17,11 @@ public class GameMenuManager : MonoBehaviour
     [Header("Input")]
     public InputActionProperty showButton;
 
+    [Header("XRRay")]
+    public LineRenderer menuLineRenderer;
+    public GameObject saber;
+    public GameObject hand;
+
     private bool paused = false;
     void Start()
     {
@@ -31,10 +36,16 @@ public class GameMenuManager : MonoBehaviour
             if (!paused)
             {
                 Pause();
+                menuLineRenderer.enabled = true;
+                saber.SetActive(false);
+                hand.SetActive(false);
             }
             else if (paused)
             {
                 Resume();
+                menuLineRenderer.enabled = false;
+                saber.SetActive(true);
+                hand.SetActive(true);
             }
         }
     }
@@ -56,6 +67,7 @@ public class GameMenuManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Resume();
     }
 
     public void Quit()
