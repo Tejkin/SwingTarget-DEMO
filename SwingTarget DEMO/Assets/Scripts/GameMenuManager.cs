@@ -17,10 +17,18 @@ public class GameMenuManager : MonoBehaviour
     [Header("Input")]
     public InputActionProperty showButton;
 
-    [Header("XRRay")]
-    public LineRenderer menuLineRenderer;
-    public GameObject saber;
-    public GameObject hand;
+    [Header("XRRay Interactor")]
+
+    [Header("Left Controller")]
+    public GameObject leftMenuLineRenderer;
+    public GameObject leftHandModel;
+    public GameObject leftSwing;
+
+    [Header("Right Controller")]
+    public GameObject rightMenuLineRenderer;
+    public GameObject rightSaber;
+    public GameObject rightHandModel;
+    public GameObject rightSwing;
 
     private bool paused = false;
     void Start()
@@ -36,16 +44,12 @@ public class GameMenuManager : MonoBehaviour
             if (!paused)
             {
                 Pause();
-                menuLineRenderer.enabled = true;
-                saber.SetActive(false);
-                hand.SetActive(false);
+                
             }
             else if (paused)
             {
                 Resume();
-                menuLineRenderer.enabled = false;
-                saber.SetActive(true);
-                hand.SetActive(true);
+                
             }
         }
     }
@@ -55,6 +59,16 @@ public class GameMenuManager : MonoBehaviour
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
         paused = true;
+
+        // Deactivate model
+        leftMenuLineRenderer.SetActive(true);
+        leftHandModel.SetActive(false);
+        leftSwing.SetActive(false);
+
+        rightSwing.SetActive(false);
+        rightSaber.SetActive(false);
+        rightMenuLineRenderer.SetActive(true);
+        rightHandModel.SetActive(false);
     }
 
     public void Resume()
@@ -62,6 +76,17 @@ public class GameMenuManager : MonoBehaviour
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
         paused = false;
+
+        //Reactivate model
+        leftMenuLineRenderer.SetActive(false);
+        rightSaber.SetActive(true);
+        leftHandModel.SetActive(true);
+        leftSwing.SetActive(true);
+
+        rightSwing.SetActive(true);
+
+        rightMenuLineRenderer.SetActive(false);
+        rightHandModel.SetActive(true);
     }
     
     public void Restart()
@@ -82,6 +107,14 @@ public class GameMenuManager : MonoBehaviour
         endMenu.SetActive(!endMenu.activeSelf);
         float timer = linkedTimerManager.ReturnTimer();
         timerText.text = timer.ToString("0.00") + " seconds";
+        leftMenuLineRenderer.SetActive(true);
+        leftHandModel.SetActive(false);
+        leftSwing.SetActive(false);
+
+        rightSwing.SetActive(false);
+        rightSaber.SetActive(false);
+        rightMenuLineRenderer.SetActive(true);
+        rightHandModel.SetActive(false);
     }
 }
 
